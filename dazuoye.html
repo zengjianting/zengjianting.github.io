@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算器</title>
+<!-- 样式表开始 -->
+<style>
+.button{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(196, 196, 196);
+}
+
+table{
+    background-color: aliceblue;
+    border-width: 2px;
+    border-style: solid;
+    border-color:black ;
+}
+
+body{
+  background-color: rgb(91, 166, 196);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  height: 100vh;
+}
+
+.text{
+    width: 300px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(208, 89, 212);
+    text-align: right;
+}
+
+.text2{
+    width: 300px;
+    height: 50px;
+    background-color:rgb(255, 255, 255);
+    color:rgb(208, 89, 212) ;
+    margin-top: -5px;
+    text-align: right;
+}
+</style>
+</head>
+<body>
+<table>
+<!-- 第一行输入框 -->
+<tr>
+    <td colspan="5"><input type="text" class="text"></td>
+</tr>
+<!-- 第二行输入框 -->
+<tr>
+    <td colspan="5"><input type="text" class="text text2"></td>
+</tr>
+<!-- 按钮布局 -->
+<tr>
+    <td><input type="button" value="delete" class="button"></td>
+    <td><input type="button" value="sin" class="button"></td>
+    <td><input type="button" value="cos" class="button"></td>
+    <td><input type="button" value="tan" class="button"></td>
+    <td><input type="button" value="/" class="button"></td>
+</tr>
+<tr>
+    <td><input type="button" value="C" class="button"></td>
+    <td><input type="button" value="7" class="button"></td>
+    <td><input type="button" value="8" class="button"></td>
+    <td><input type="button" value="9" class="button"></td>
+    <td><input type="button" value="*" class="button"></td>
+</tr>
+<tr>
+    <td><input type="button" value="n!" class="button"></td>
+    <td><input type="button" value="4" class="button"></td>
+    <td><input type="button" value="5" class="button"></td>
+    <td><input type="button" value="6" class="button"></td>
+    <td><input type="button" value="-" class="button"></td>
+</tr>
+<tr>
+    <td><input type="button" value="^" class="button"></td>
+    <td><input type="button" value="1" class="button"></td>
+    <td><input type="button" value="2" class="button"></td>
+    <td><input type="button" value="3" class="button"></td>
+    <td><input type="button" value="+" class="button"></td>
+</tr>
+<tr>
+    <td><input type="button" value="(" class="button"></td>
+    <td><input type="button" value=")" class="button"></td>
+    <td><input type="button" value="0" class="button"></td>
+    <td><input type="button" value="." class="button"></td>
+    <td><input type="button" value="=" class="button"></td>
+</tr>
+</table>
+<script>
+//获取所有按钮和输入框
+const buttons = document.querySelectorAll('.button');
+const inputText = document.querySelector('.text');
+const outputText = document.querySelector('.text2');
+
+
+//为每个按钮添加点击事件
+buttons.forEach(button => {
+    button.addEventListener('click',() => {
+        const value =button.value;
+        if (value === '=') {
+            try {
+              //尝试计算表达式
+              const result =eval(inputText.value);
+              outputText.value=result;
+            } catch(error) {
+                outputText.value="错误的表达式";
+            }
+        } else if (value === 'C') {
+            //清空输入和输出框
+            inputText.value = '';
+            outputText.value = '';
+        } else if (value === 'delete') {
+            //删除输入框最后一个字符
+            inputText.value = inputText.value.slice(0.-1);
+            outputText.value = '';
+        } else if (value === '^') {
+            //计算平方
+            const result = Math.pow(parseFloat(inputText.value),2);
+            outputText.value =result;
+        } else if (value === 'n!') {
+            //计算阶乘
+            const num = parseInt(inputText.value);
+            let result = 1;
+            for (let i = 1; i <= num; i++) {
+                result *=i;
+            }
+            outputText.value = result;
+        } else if (value === 'sin') {
+            //计算正弦
+            const result = Math.sin(parseFloat(inputText.value)* Math.PI / 180);
+            outputText.value = result;
+        } else if (value === 'cos') {
+            //计算余弦
+            const result = Math.cos(parseFloat(inputText.value)* Math.PI / 180);
+            outputText.value = result;
+        } else if (value === 'tan') {
+            //计算正切
+            const result = Math.tan(parseFloat(inputText.value)* Math.PI / 180);
+            outputText.value = result;
+        } else{
+            //向输入框添加按钮值
+            inputText.value += value;
+        }
+    });
+});
+</script>
+</body>
+</html>
